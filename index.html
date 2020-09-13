@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="wrapper">
         <header>
@@ -30,55 +33,57 @@
         </aside>
         <main>
             <h1 id="cityName">City Name</h1>
-            <div>
-                <div id="weather-desc"></div>
-                <div><span id="temp"></span>&deg;C</div>
+            <div id="weather-desc"></div>
+            <section>
                 <i class="main-image fas"></i>
-                <div>UV Index: <span id="uv-index"></span></div>
-            </div>
-            <div>
-                <div>Wind Speed: <span id="wind-speed"></span></div>
-                <div>Humidity: <span id="humidity"></span></div>
-            </div>
-            <div id="map">Radar Map</div>
+                <div class="main-temperature">
+                    <div><span id="temp"></span>&deg;C</div>
+                    <div class="uv-index">UV Index: <span id="uv-index"></span></div>
+                </div>
+                <div class="other-details">
+                    <div class="wind-speed">Wind Speed: <span id="wind-speed"></span></div>
+                    <div class="humidity">Humidity: <span id="humidity"></span></div>
+                </div>
+            </section>
         </main>
-        <section>
-            <h1>Looking Ahead</h1>
+        <h1 class="forecast-heading">Looking Ahead</h1>
+        <section class="forecast">
             <article>
                 <div id="forecast1"></div>
                 <i class="icon1 fas"></i>
-                <div>Temperature: <span id="temp1"></span>&deg;C</div>
+                <div><span id="temp1"></span>&deg;C</div>
                 <div>Humidity: <span id="humidity1"></span></div>
             </article>
             <article>
                 <div id="forecast2"></div>
                 <i class="icon2 fas"></i>
-                <div>Temperature: <span id="temp2"></span>&deg;C</div>
+                <div><span id="temp2"></span>&deg;C</div>
                 <div>Humidity: <span id="humidity2"></span></div>
             </article>
             <article>
                 <div id="forecast3"></div>
                 <i class="icon3 fas"></i>
-                <div>Temperature: <span id="temp3"></span>&deg;C</div>
+                <div><span id="temp3"></span>&deg;C</div>
                 <div>Humidity: <span id="humidity3"></span></div>
             </article>
             <article>
                 <div id="forecast4"></div>
                 <i class="icon4 fas"></i>
-                <div>Temperature: <span id="temp4"></span>&deg;C</div>
+                <div><span id="temp4"></span>&deg;C</div>
                 <div>Humidity: <span id="humidity4"></span></div>
             </article>
             <article>
                 <div id="forecast5"></div>
                 <i class="icon5 fas"></i>
-                <div>Temperature: <span id="temp5"></span>&deg;C</div>
+                <div><span id="temp5"></span>&deg;C</div>
                 <div>Humidity: <span id="humidity5"></span></div>
             </article>
         </section>
     </div>
-    
+
     <script src="https://kit.fontawesome.com/c0b8f5d665.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="./script.js"></script>
 </body>
+
 </html>

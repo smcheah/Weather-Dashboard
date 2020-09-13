@@ -2,6 +2,8 @@ var date = new Date().toDateString().slice(4);
 var searchHistory = [];
 var searchInput = "";
 
+
+
 // load local storage
 loadHistory();
 
@@ -54,13 +56,27 @@ function displayData(input) {
         var data = response.data[0];
         var icon = (data.weather.code).toString();
         changeIcon($(".main-image"), icon)
-
         addToHistory((data.city_name), (data.country_code))
+        console.log(data)
 
         $("#cityName").text(data.city_name + ", " + data.country_code);
         $("#weather-desc").text(date + " | " + data.weather.description)
         $("#temp").text(data.temp)
         $("#uv-index").text((data.uv).toFixed(2))
+
+        // change background based on UV Index
+        if (((data.uv).toFixed(2)) < 3) {
+            $("main").attr("style", "background-color: lightblue")
+        } else if (((data.uv).toFixed(2)) < 6) {
+            $("main").attr("style", "background-color: #ffffcc")
+        } else if (((data.uv).toFixed(2)) < 8) {
+            $("main").attr("style", "background-color: #ffcc99")
+        } else if (((data.uv).toFixed(2)) < 11) {
+            $("main").attr("style", "background-color: #ff9999")
+        } else {
+            $("main").attr("style", "background-color: #cc99ff")
+        }
+
         $("#wind-speed").text(data.wind_spd + "m/s")
         $("#humidity").text(data.rh + "%")
     })
@@ -98,6 +114,7 @@ function loadHistory() {
         var newButton = $("<button>");
         newButton.text(element.cityName + ", " + element.countryCode);
         $("#searchHistory").append(newButton)
+        $("#searchHistory").append($("<br>"))
     });
 }
 
@@ -117,6 +134,7 @@ function addToHistory(cityName, countryCode) {
         // adds new button
         var newButton = $("<button>");
         newButton.text(cityName + ", " + countryCode);
+        $("#searchHistory").prepend($("<br>"))
         $("#searchHistory").prepend(newButton)
         
         // adds item to local storage
@@ -132,6 +150,7 @@ function addToHistory(cityName, countryCode) {
                 var newButton = $("<button>");
                 newButton.text(element.cityName + ", " + element.countryCode);
                 $("#searchHistory").append(newButton)
+                $("#searchHistory").append($("<br>"))
             });
         }
     }
