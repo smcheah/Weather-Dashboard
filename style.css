@@ -1,56 +1,92 @@
 body {
     font-family: 'Titillium Web', sans-serif;
-    
 }
+
 .wrapper {
     display: grid;
-    grid-template-rows: 60px 50px auto 30px auto;
-    grid-template-columns: 25% auto;
-    gap: 15px;
+    gap: 10px;
     margin: 20px;
+    grid-template-areas:
+        "header"
+        "aside"
+        "main"
+        "forecast-heading"
+        "forecast";
+}
+
+button {
+    background-color: transparent;
+    font-family: inherit;
+    border-radius: 5px;
+    border: 2px solid black;
+    margin: 1.7px;
+    font-size: 16px;
+}
+
+#form input {
+    font-family: inherit;
+    border-radius: 5px;
+    border: 2px solid black;
+    width: 60%;
+    font-size: 16px;
+}
+
+#toggle-history {
+    display: inline;
+}
+
+#searchHistory button {
+    width: 85%;
+}
+
+.history-section {
+    display: none;
 }
 
 header {
-    grid-row: 1/2;
-    grid-column: 1/3;
-    background-color: cornflowerblue;
+    grid-area: header;
     align-self: center;
     text-align: center;
     border-radius: 5px;
+    border: 3px solid black;
 }
+
 header h1 {
     margin: 8px;
 }
 
 aside {
-    grid-row: 2/6;
-    grid-column: 1/2;
-    background-color: darkgray;
+    grid-area: aside;
+    border: 3px solid black;
     text-align: center;
     padding: 5%;
     border-radius: 5px;
 }
 
 main {
-    grid-row: 2/4;
-    grid-column: 2/3;
-    background-color: lightblue;
+    grid-area: main;
+    border: 3px solid black;
     padding: 5%;
     border-radius: 5px;
 }
+
 main #cityName {
     margin: 0;
     font-size: 3em;
     line-height: 1.2em;
     align-self: center;
 }
+
 main #weather-desc {
     align-self: center;
     padding-left: 2%;
 }
+
 main section {
     display: flex;
+    flex-direction: column;
 }
+
 main .fas {
     align-self: center;
     text-align: right;
@@ -58,6 +94,7 @@ main .fas {
     padding: 2%;
     width: 25%;
 }
+
 main .main-temperature {
     align-self: center;
     text-align: left;
@@ -66,45 +103,107 @@ main .main-temperature {
     width: 45%;
     font-size: larger;
 }
+
 main .uv-index {
     text-align: center;
 }
+
 main #temp {
     font-size: 15vw;
     line-height: 1em;
 }
+
 main .other-details {
     align-self: center;
-    width: 30%;
-    font-size: 1.5vw;
-    margin-left: 5%;
+    width: 100%;
 }
+
 main .wind-speed,
 main .humidity {
-    border: 1px solid black;
-    padding: 10%;
-    margin: 15%;
-    height: 50%;
+    border: 3px solid black;
+    padding: 6%;
+    margin: 5%;
     border-radius: 5px;
     text-align: center;
+    background-color: white;
 }
 
 .forecast-heading {
-    grid-row: 4/5;
-    grid-column: 2/3;
+    grid-area: forecast-heading;
     align-self: center;
+    margin: 0;
 }
+
 .forecast {
-    grid-row: 5/6;
-    grid-column: 2/3;
-    background-color: lightgoldenrodyellow;
+    grid-area: forecast;
+    border: 3px solid black;
     align-self: center;
     display: flex;
+    padding: 1%;
+    border-radius: 5px;
+    flex-direction: column;
+}
+
+.forecast article {
+    margin: 1%;
     padding: 2%;
+    text-align: center;
+    border: 3px solid black;
     border-radius: 5px;
 }
-.forecast article {
-    padding: 2%;
-    width: 25%;
-    text-align: center;
+
+/* when screen is more than 768px wide */
+@media screen and (min-width: 768px) {
+    .wrapper {
+        grid-template-columns: 25% auto;
+        grid-template-areas:
+            "header           header"
+            "aside            main"
+            "forecast-heading forecast-heading"
+            "forecast         forecast";
+    }
+
+    #form #toggle-history {
+        display: none;
+    }
+
+    .history-section {
+        display: block;
+    }
+
+    .forecast {
+        flex-direction: row;
+    }
+
+    .forecast article {
+        width: 25%;
+    }
+}
+
+/* desktop */
+@media screen and (min-width: 900px) {
+    .wrapper {
+        grid-template-rows: 60px 50px auto 30px auto;
+        grid-template-columns: 25% auto;
+        grid-template-areas:
+            "header header"
+            "aside  main"
+            "aside  main"
+            "aside  forecast-heading"
+            "aside  forecast";
+    }
+
+    main section {
+        flex-direction: row;
+    }
+
+    main .other-details {
+        font-size: 1.5vw;
+        margin-left: 5%;
+    }
+
+    main .wind-speed,
+    main .humidity {
+        margin: 5%;
+    }
 }

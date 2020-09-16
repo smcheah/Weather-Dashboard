@@ -37,6 +37,12 @@ $("#searchBtn").on("click", function(event) {
     displayData(searchInput);
 })
 
+// toggle search history menu 
+$("#toggle-history").on("click", function(event) {
+    event.preventDefault();
+    $(".history-section").toggle(200);
+})
+
 function displayData(input) {
     var queryParams = {
         key: "8febbce1a0e54114bf39a5d36e0029c1"
@@ -57,25 +63,13 @@ function displayData(input) {
         var icon = (data.weather.code).toString();
         changeIcon($(".main-image"), icon)
         addToHistory((data.city_name), (data.country_code))
-        console.log(data)
+        
 
         $("#cityName").text(data.city_name + ", " + data.country_code);
         $("#weather-desc").text(date + " | " + data.weather.description)
         $("#temp").text(data.temp)
         $("#uv-index").text((data.uv).toFixed(2))
-
-        // change background based on UV Index
-        if (((data.uv).toFixed(2)) < 3) {
-            $("main").attr("style", "background-color: lightblue")
-        } else if (((data.uv).toFixed(2)) < 6) {
-            $("main").attr("style", "background-color: #ffffcc")
-        } else if (((data.uv).toFixed(2)) < 8) {
-            $("main").attr("style", "background-color: #ffcc99")
-        } else if (((data.uv).toFixed(2)) < 11) {
-            $("main").attr("style", "background-color: #ff9999")
-        } else {
-            $("main").attr("style", "background-color: #cc99ff")
-        }
+        bgColorChange(($("main")), data.uv)
 
         $("#wind-speed").text(data.wind_spd + "m/s")
         $("#humidity").text(data.rh + "%")
@@ -86,21 +80,35 @@ function displayData(input) {
         url: forecastWeatherURL,
         method: "GET"
     }).then(function (response) {
-        // console.log(response)
         var data = response.data;
         var nextDay;
-        
         for (var i = 1; i < 6; i++) {
             nextDay = new Date(new Date().setDate(new Date().getDate() + i))
             $("#forecast" + i).text(nextDay.toDateString().slice(4))
 
             var icon = (data[i].weather.code).toString();
             changeIcon($(".icon" + i), icon)
+            bgColorChange($($(".forecast")[0].children[i-1]), data[i].uv)
 
             $("#temp" + i).text(data[i].max_temp + " / " + data[i].min_temp)
             $("#humidity" + i).text(data[i].rh + "%")
         }
     })
+}
+
+function bgColorChange(element, uv) {
+    // change background based on UV Index
+    if (uv < 3) {
+        element.attr("style", "background-color: lightblue")
+    } else if (uv < 6) {
+        element.attr("style", "background-color: #ffffcc")
+    } else if (uv < 8) {
+        element.attr("style", "background-color: #ffcc99")
+    } else if (uv < 11) {
+        element.attr("style", "background-color: #ff9999")
+    } else {
+        element.attr("style", "background-color: #cc99ff")
+    }
 }
 
 // save search searchHistory (city/country name)
@@ -114,7 +122,6 @@ function loadHistory() {
         var newButton = $("<button>");
         newButton.text(element.cityName + ", " + element.countryCode);
         $("#searchHistory").append(newButton)
-        $("#searchHistory").append($("<br>"))
     });
 }
 
@@ -127,14 +134,13 @@ function addToHistory(cityName, countryCode) {
     if ( found === undefined) {
         searchHistory.unshift({cityName, countryCode});
 
-        if ( searchHistory.length > 6 ) {
+        if ( searchHistory.length > 16 ) {
             searchHistory.pop();
         }
 
         // adds new button
         var newButton = $("<button>");
         newButton.text(cityName + ", " + countryCode);
-        $("#searchHistory").prepend($("<br>"))
         $("#searchHistory").prepend(newButton)
         
         // adds item to local storage
@@ -150,7 +156,6 @@ function addToHistory(cityName, countryCode) {
                 var newButton = $("<button>");
                 newButton.text(element.cityName + ", " + element.countryCode);
                 $("#searchHistory").append(newButton)
-                $("#searchHistory").append($("<br>"))
             });
         }
     }
